@@ -1,6 +1,7 @@
 import os
 import numpy
 from pandas import DataFrame
+from sklearn.feature_extraction.text import CountVectorizer
 
 
 NEWLINE = '\n'
@@ -31,6 +32,10 @@ def main():
 
     data = data.reindex(numpy.random.permutation(data.index))
     print(data)
+
+    count_vectorizer = CountVectorizer()
+    counts = count_vectorizer.fit_transform(data['text'].values)
+    print(counts)
 
 
 def read_files(path):
