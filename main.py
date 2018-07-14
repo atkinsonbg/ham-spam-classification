@@ -2,6 +2,7 @@ import os
 import numpy
 from pandas import DataFrame
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
 
 
 NEWLINE = '\n'
@@ -36,6 +37,16 @@ def main():
     count_vectorizer = CountVectorizer()
     counts = count_vectorizer.fit_transform(data['text'].values)
     print(counts)
+
+    classifer = MultinomialNB()
+    targets = data['class'].values
+    classifer.fit(counts, targets)
+    print(targets)
+
+    examples = ['Free Viagra call today!', "I'm going to attend the Linux users group tomorrow.", "There is a free class tomorrow, want to go?"]
+    example_counts = count_vectorizer.transform(examples)
+    predictions = classifer.predict(example_counts)
+    print(predictions)
 
 
 def read_files(path):
